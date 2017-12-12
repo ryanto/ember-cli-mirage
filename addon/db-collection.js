@@ -215,7 +215,9 @@ class DbCollection {
     let records;
 
     if (typeof target === 'undefined') {
-      this._records = [];
+      // this will empty records, but keep all of the insert/update
+      // functions we added to the collection array
+      this._records.splice(0, this._records.length);
       this.identityManager.reset();
 
     } else if (typeof target === 'number' || typeof target === 'string') {

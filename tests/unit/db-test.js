@@ -110,13 +110,14 @@ module('Unit | Db #all', function(hooks) {
     assert.deepEqual(db.addresses, this.data.addresses);
   });
 
-  test('the collection is a copy', function(assert) {
+  test('the collection is not a copy, but doesnt change the initial data', function(assert) {
     let { contacts } = db;
 
     assert.deepEqual(contacts, this.data.contacts);
     contacts[0].name = 'Zelda';
 
-    assert.deepEqual(db.contacts, this.data.contacts);
+    assert.equal(db.contacts[0].name, 'Zelda');
+    assert.equal(this.data.contacts[0].name, 'Link');
   });
 });
 
