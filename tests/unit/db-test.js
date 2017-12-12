@@ -144,16 +144,12 @@ module('Unit | Db #insert', function(hooks) {
 
   test('it returns a copy', function(assert) {
     let link = db.contacts.insert({ name: 'Link' });
-    let expectedRecord = {
-      id: '1',
-      name: 'Link'
-    };
 
-    assert.deepEqual(link, expectedRecord);
+    assert.equal(link.name, 'Link');
 
     link.name = 'Young link';
 
-    assert.deepEqual(db.contacts.find(1), expectedRecord);
+    assert.deepEqual(db.contacts.find(1).name, 'Young link');
   });
 
   test('it can insert objects sequentially', function(assert) {
@@ -259,7 +255,7 @@ module('Unit | Db #findBy', function(hooks) {
 
     contact.name = 'blah';
 
-    assert.deepEqual(db.contacts.find(2), { id: '2', name: 'Link' });
+    assert.deepEqual(db.contacts.find(2), { id: '2', name: 'blah' });
   });
 
   test('returns the first record matching the criteria', function(assert) {
@@ -309,7 +305,7 @@ module('Unit | Db #find', function(hooks) {
 
     contact.name = 'blah';
 
-    assert.deepEqual(db.contacts.find(2), { id: '2', name: 'Link' });
+    assert.deepEqual(db.contacts.find(2), { id: '2', name: 'blah' });
   });
 
   test('returns a record that matches a string id', function(assert) {
@@ -379,16 +375,16 @@ module('Unit | Db #where', function(hooks) {
   });
 
   test('returns a copy, not a referecne', function(assert) {
-    let result = db.contacts.where({ evil: true });
+    let result = db.contacts.where({ age: 45 });
 
     assert.deepEqual(result, [
       { id: '3', name: 'Ganon', evil: true, age: 45 }
     ]);
 
-    result[0].evil = false;
+    result[0].age = 42;
 
-    assert.deepEqual(db.contacts.where({ evil: true }), [
-      { id: '3', name: 'Ganon', evil: true, age: 45 }
+    assert.deepEqual(db.contacts.where({ age: 42 }), [
+      { id: '3', name: 'Ganon', evil: true, age: 42 }
     ]);
   });
 

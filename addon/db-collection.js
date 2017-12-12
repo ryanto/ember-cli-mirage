@@ -4,11 +4,7 @@ import _isEqual from 'lodash/isEqual';
 import _sortBy from 'lodash/sortBy';
 
 function duplicate(data) {
-  if (Array.isArray(data)) {
-    return data.map(duplicate);
-  } else {
-    return _assign({}, data);
-  }
+  return data;
 }
 
 /**
